@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <App/>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  //局部组件
+  //如果仅仅是实例化vue对象中，既有el又有template
+  //如果template中定义模板的内容 那么template模板的
+  //优先级大于el
+  //App header aside content
+  //1.声子 Vue 组件的名字 首字母要大写 跟标签区分 组件中的data必须是个函数
+  //一定要有返回值
+  let Vheader = {
+      data(){
+          return{
+              msga: '啦啦啦啦啦啦'
+          }
+      },template:`
+          <div>
+            <h1>{{ msga }}</h1>
+          </div>
+      `
+  }
+
+  let App = {
+      data() {
+          return{
+            text:'日天!'
+          }
+          //template里面写闭合标签 要用div包裹起来
+      },template: `
+        <div>
+        <h2>{{ text }}</h2>
+        <Vheader/>
+        </div>
+      `,components: {
+          Vheader
+      }
+  }
+  new Vue({
+      el:'#app',
+      data(){
+          return{
+            msg:'alex'
+          }
+      },
+      //3.用子  不在template里面使用可以在el里面使用
+      template:`
+          <div>
+          <App/>
+</div>
+      `,
+      components:{
+          //2.挂子
+          //如果key和value一样可以只写一个
+          //App:App
+          App
+      }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <img :src="image[currentIndex].imgsrc" alt="" @click="imgHandler">
+    <br>
+    <button @click="lastHandle">上一张</button>
+    <button @click="nextHandle">下一张</button>
+  </div>
+<script>
+  let vm = new Vue({
+
+      el:"#app",
+      data(){
+          return {//需要个返回值来传递数据
+              image: [
+                  {id: 1, imgsrc: 'image/1.jpg'},
+                  {id: 1, imgsrc: 'image/2.png'},
+                  {id: 1, imgsrc: 'image/3.jpg'},
+                  {id: 1, imgsrc: 'image/4.png'}
+              ],
+              currentIndex:0
+          }
+      },
+      methods:{
+          nextHandle(){
+              this.currentIndex++;
+            if(this.currentIndex === 4){
+                this.currentIndex = 0;
+            }
+          },
+          lastHandle(){
+              this.currentIndex--;
+              //alert(this.currentIndex);
+            if (this.currentIndex === -1){
+                this.currentIndex = 3;
+            }
+          },
+          prevHandler(e){
+
+          },
+          imgHandler(e){
+              console.log(e.target);
+              console.log(this);
+          }
+          //组件创建完成ajax
+/*          created(){
+            setInterval( function() {
+                console.log(this)//指的是window对象
+            },1000)
+          }*/
+
+      },
+      created(){
+          setInterval(()=>{
+              //console.log(this)//指的是vue
+              this.currentIndex++;
+              //alert(this.currentIndex);
+              if(this.currentIndex === 4){
+                  this.currentIndex = 0;
+              }
+          },1000);
+      }
+  })
+</script>
+</body>
+</html>

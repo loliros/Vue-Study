@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <p>{{ myMsg }}</p>
+  <button @click="btn">修改</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                msg:'alex',
+                age:18
+            }
+        },
+        methods: {
+            btn(){
+                this.msg='wusir'
+            }
+        },
+        watch:{//监听器
+            'msg':function (values) {
+                console.log(values)//values是msg的值
+            }
+        },computed:{//计算属性
+            myMsg:function () {
+                //计算属性默认只有getter方法
+                return `lalala${this.msg},年龄是${this.age}`;
+            }
+        }
+    })
+</script>
+</body>
+</html>

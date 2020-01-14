@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  //全局的组件不需要挂子 可以直接声子到用子
+  //第一个参数是组件的名字  第二个参数options
+  //slot是vue里面的的内置组件
+  Vue.component('Vaside',{
+        data(){
+            return{
+
+            }
+        },template:`
+          <button>
+          <slot></slot>
+</button>
+
+        `
+  })
+
+  let Vheader = {
+      data(){
+          return{
+              msga: '啦啦啦啦啦啦'
+          }
+      },template:`
+          <div>
+            <h1>{{ msga }}</h1>
+            <Vaside>按钮</Vaside>
+            <Vaside>提交</Vaside>
+            <Vaside>按钮</Vaside>
+          </div>
+      `
+  }
+
+  let App = {
+      data() {
+          return{
+              text:'日天!'
+          }
+          //template里面写闭合标签 要用div包裹起来
+      },template: `
+        <div>
+        <h2>{{ text }}</h2>
+        <Vaside>删除</Vaside>
+        </div>
+      `
+  }
+
+  new Vue({
+      el:'#app',
+      data(){
+          return{
+
+          }
+      },template: `
+          <div>
+            <App/>
+            <Vheader/>
+</div>
+      `,methods:{
+          btn(){
+              alert('1');
+          }
+      },components:{
+          App,
+          Vheader
+      }
+  })
+</script>
+</body>
+</html>

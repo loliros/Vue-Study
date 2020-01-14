@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <App/>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  let bus = new Vue();
+
+
+  let Vheader = {
+      data(){
+          return{
+
+          }
+      },
+      template:`
+      <div class="header">
+            <Test/>
+            <Test2/>
+</div>
+      `
+  }
+
+  let App = {
+      data() {
+          return {
+
+          }
+      },
+      template: `
+          <div class="app">
+               <Vheader />
+</div>
+      `,components: {
+          Vheader
+      }
+  }
+
+
+  //Test 往 Test2传值 Test2需要声明事件 $on('事件的名字',function(){})
+  // Test需要调用触发事件 用$emit触发('Test组件中声明的事件名','需要传递的值')
+  // 前提 这两个方法必须绑定再同一个实例化对象中
+  Vue.component('Test',{
+      data(){
+          return{
+              msg:'Test组件'
+          }
+      },
+      template: `
+      <button @click="clickHandler">传递参数</button>
+      `,
+      methods:{
+          clickHandler(){
+              bus.$emit('clickHandler',this.msg);
+          }
+      }
+  })
+
+  Vue.component('Test2',{
+      data(){
+          return{
+
+          }
+      },
+      template: `
+            <p></p>
+      `,
+      created(){
+          bus.$on('clickHandler',function (val) {
+              alert(val);
+          })
+      }
+  })
+
+  new Vue({
+      el:'#app',
+      data(){
+          return{
+
+          }
+      },
+      components: {
+          App
+      }
+  })
+</script>
+</body>
+</html>

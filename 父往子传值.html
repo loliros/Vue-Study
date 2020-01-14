@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  //子组件往父组件传递参数 先在父组件的自定义一个参数属性 这里定义了一个点击事件clickHandler
+  //然后再父组件的methods里面声明这个函数，然后再子组件的methods声明一样的名字
+  Vue.component('Btn',{
+      data(){
+          return{
+
+          }
+      },template:`
+        <!--<button>{{ title }}</button>-->
+        <button @click="clickhandler">{{ id }}</button>
+                `,
+      props: ['title','id'],
+      methods:{
+          clickhandler(){
+              //第一个参数是自定义事件，触发父组件声明定义的事件 第二个参数是传值
+              this.id++;
+              this.$emit('clickHandler',this.id)
+          }
+      }
+  })
+
+    //在子组件中使用props声明 可以直接在子组件中任意使用
+    let Vheader = {
+        data(){
+            return{
+
+            }
+        },template:`
+          <div>
+            <h1>{{ msg }}</h1>
+            <h2>{{ post.title }}</h2>
+<!--            <Btn v-bind:title="post.title"></Btn>-->
+            <btn v-bind:id="post.id" @clickHandler="clickHandler"></btn>
+            <p>{{ post.id }}</p>
+          </div>
+      `,methods:{
+            clickHandler(val){
+                alert(this.post.id)
+                  this.post.id = val
+            }
+        },
+        //挂载父组件的属性 数组
+        props:['msg','post'],
+    }
+    //父组件要自定义挂载属性  自定义了一个名为msg的属性 子组件用props接收
+   let App = {
+        data() {
+            return{
+                post: {
+                    id: 1,
+                    title: 'My Journey with Vue'
+                }
+            }
+        },template: `
+        <div>
+            <Vheader v-bind:post="post"></Vheader>
+        </div>
+      `,components: {
+           Vheader
+       }
+    }
+
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                post: {
+                    id: 1,
+                    title: 'My Journey with Vue'
+                }
+            }
+        },template: `
+          <div>
+            <App/>
+</div>
+      `,methods:{
+            btn(){
+                alert('1');
+            }
+        },components:{
+            App
+        }
+    })
+</script>
+</body>
+</html>

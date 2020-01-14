@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <p>{{ msg }}</p>
+  <button @click="btn">修改</button>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+      el:'#app',
+      data(){
+          return{
+              msg:'alex',
+              age:18
+          }
+      },
+      methods: {
+          btn(){
+              this.msg='wusir'
+              this.age=20
+          }
+      },
+      watch:{//监听器
+          'msg':function (values) {
+              console.log(values)//values是msg的值
+          },
+          'age':function (values) {
+              console.log(values)//values是age的值
+          }
+      }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //平行组件传值 需要一个实例化的对象  Test往Test2传值 $emit传值(事件名,传递参数)    $on接收(事件名,function(){})
+    let bus = new Vue();
+
+    Vue.component('Test2',{
+        data(){
+            return{
+
+            }
+        },
+        template: `
+            <p></p>
+      `,
+        created(){
+            bus.$on('lalala',function (val) {
+                alert(val);
+            })
+        }
+    })
+
+    Vue.component('Test',{
+        data(){
+            return{
+                msg:'Test的组件'
+            }
+        },
+        template: `
+      <button @click="clickHandler1">传递参数</button>
+      `,methods:{
+            clickHandler1(){
+                alert(1)
+                bus.$emit('lalala',this.msg);
+            }
+        }
+    })
+
+
+
+    let Vheader = {
+        data(){
+            return{
+
+            }
+        },
+        template:`
+        <div class="header">
+            <Test2/>
+            <Test/>
+</div>
+      `
+    }
+
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+
+            }
+        },
+        components:{
+            Vheader
+        },
+        template:`
+      <div>
+      <Vheader/>
+</div>
+      `
+    })
+</script>
+</body>
+</html>
